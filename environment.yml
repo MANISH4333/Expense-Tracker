@@ -1,0 +1,21 @@
+name: medichatbot
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+    - streamlit
+    - fpdf
+    - pypdf
+    - faiss-cpu
+    - langchain
+    - euriai
+    - langchain-community
+    - sentence-transformers
+    - gTTS
+    - SpeechRecognition
+    - pydub
+    - streamlit-webrtc
+  - pyarrow
+  - ffmpeg
