@@ -6,5 +6,5 @@ sentence-transformers
 gTTS
 pydub
 SpeechRecognition
-euriai
+euriai==1.0.0  # replace with the version that works for you
 fpdf
