@@ -73,7 +73,7 @@ from app.pdf_utlis import extract_text_from_pdf
 from app.vectorstore_utlis import create_faiss_index, retrive_relevant_docs
 from app.chat_utlis import get_chat_model, ask_chat_model
 from app.config import EURI_API_KEY
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 import time
 import uuid
 
