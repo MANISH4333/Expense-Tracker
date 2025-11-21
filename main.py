@@ -305,11 +305,20 @@ def update_input_state_on_change():
 
 
 # Main chat input widget
+# Prefill the chat input by setting session state (older Streamlit versions
+# don't accept the `value` parameter on `st.chat_input`).
+if current_input_value:
+    try:
+        st.session_state.chat_input_box = current_input_value
+    except Exception:
+        # If session state cannot be set for some reason, continue without prefill
+        pass
+
 prompt = st.chat_input(
     "Ask about your Expense documents...",
-    value=current_input_value,
     key="chat_input_box", # Unique key for the widget
-    on_change=update_input_state_on_change # Callback for handling input changes
+    on_change=update_input_state_on_change, # Callback for handling input changes
+    placeholder="Ask about your Expense documents...",
 )
 
 
