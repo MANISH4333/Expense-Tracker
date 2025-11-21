@@ -4,7 +4,6 @@
 import streamlit as st
 from io import BytesIO
 
-
 def pdf_uploader():
     """Upload PDF files"""
     return st.file_uploader(
@@ -13,7 +12,6 @@ def pdf_uploader():
         accept_multiple_files=True,
         help="Upload one or more PDF files to process."
     )
-
 
 def speak_text(text: str, lang: str = "en", play: bool = False):
     """
@@ -39,7 +37,7 @@ def speak_text(text: str, lang: str = "en", play: bool = False):
             "```bash\npip install gTTS\n```"
         )
         return None
-
+    
     mp3_fp = BytesIO()
     try:
         # Generate TTS with error handling
@@ -66,11 +64,9 @@ def speak_text(text: str, lang: str = "en", play: bool = False):
         st.error(f"❌ TTS Error: {str(e)}")
         return None
 
-
 # ============================================================================
 # FILE: app_main.py - Fixed Main Application
 # ============================================================================
-
 import streamlit as st
 from app.ui import pdf_uploader, speak_text
 from app.pdf_utlis import extract_text_from_pdf
@@ -84,10 +80,9 @@ import uuid
 # ============================================================================
 # PAGE CONFIGURATION
 # ============================================================================
-
 st.set_page_config(
     page_title="JSS Expense Pro - Document Assistant",
-    page_icon="💰",
+    page_icon="💰",  # Changed to money icon
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -95,7 +90,6 @@ st.set_page_config(
 # ============================================================================
 # STYLING
 # ============================================================================
-
 st.markdown("""
 <style>
     .chat-message {
@@ -142,7 +136,6 @@ st.markdown("""
 # ============================================================================
 # SESSION STATE INITIALIZATION
 # ============================================================================
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "vectorstore" not in st.session_state:
@@ -155,10 +148,9 @@ if "audio_cache" not in st.session_state:
 # ============================================================================
 # HEADER
 # ============================================================================
-
 st.markdown("""
 <div style="text-align: center; padding: 2rem 0;">
-    <h1 style="color: #ff4b4b; font-size: 3rem; margin-bottom: 0.5rem;">💰 Expense Tracker</h1>
+    <h1 style="color: #ff4b4b; font-size: 3rem; margin-bottom: 0.5rem;">💰  Expense Tracker</h1>
     <p style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">Your Intelligent Expense Document Assistant</p>
 </div>
 """, unsafe_allow_html=True)
@@ -166,7 +158,6 @@ st.markdown("""
 # ============================================================================
 # SIDEBAR - DOCUMENT UPLOAD
 # ============================================================================
-
 with st.sidebar:
     st.markdown("### 📁 Document Upload")
     st.markdown("Upload your expense documents to start chatting!")
@@ -235,9 +226,7 @@ with st.sidebar:
 # ============================================================================
 # MAIN CHAT INTERFACE
 # ============================================================================
-
 st.markdown("### 💬 Chat with Your Expense Documents")
-
 # Display existing chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -284,17 +273,13 @@ if prompt := st.chat_input("Ask about your Expense documents..."):
                     
                     # Create system prompt
                     system_prompt = f"""You are an intelligent expense document assistant specializing in analyzing expense documents.
-
 Based on the following expense documents, provide accurate and helpful answers to user questions.
 - If the information is in the documents, provide a detailed answer with specific details.
 - If the information is NOT in the documents, clearly state that.
 - Always cite which part of the documents you're referencing when possible.
-
 Expense Documents Context:
 {context}
-
 User Question: {prompt}
-
 Please provide a comprehensive answer:"""
                     
                     # Get response from LLM
@@ -340,7 +325,6 @@ Please provide a comprehensive answer:"""
 # ============================================================================
 # FOOTER
 # ============================================================================
-
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; color: #666; font-size: 0.9rem;">
