@@ -1,9 +1,10 @@
-streamlit
+﻿streamlit
 fpdf
 pypdf
-faiss-cpu
 langchain
-euriai
 langchain-community
 sentence-transformers
 gTTS
+pydub
+SpeechRecognition
+euriai
