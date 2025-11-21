@@ -24,7 +24,11 @@ import uuid
 import speech_recognition as sr
 from pydub import AudioSegment
 from io import BytesIO
-from streamlit_mic_recorder import mic_recorder
+try:
+    from streamlit_mic_recorder import mic_recorder
+except Exception:
+    mic_recorder = None
+    # Defer warning until after Streamlit is initialized; show a non-blocking message later.
 
 # ============================================================================
 # PAGE CONFIGURATION
@@ -221,13 +225,21 @@ for message in st.session_state.messages:
 
 # --- Speech-to-Text Recorder (Integration Point) ---
 st.markdown("<div class='stMicRecorder'>", unsafe_allow_html=True) # Apply custom styling
-audio_bytes_from_mic = mic_recorder(
-    start_prompt="Click to Speak",
-    stop_prompt="Recording... Click to Stop",
-    just_once=True, # Stop recording automatically after first audio segment
-    use_container_width=True,
-    key='speech_recorder'
-)
+audio_bytes_from_mic = None
+if mic_recorder is not None:
+    try:
+        audio_bytes_from_mic = mic_recorder(
+            start_prompt="Click to Speak",
+            stop_prompt="Recording... Click to Stop",
+            just_once=True, # Stop recording automatically after first audio segment
+            use_container_width=True,
+            key='speech_recorder'
+        )
+    except Exception as e:
+        st.warning(f"Microphone recorder is unavailable: {e}")
+        audio_bytes_from_mic = None
+else:
+    st.info("Microphone recorder not available in this environment.")
 st.markdown("</div>", unsafe_allow_html=True)
 
 
